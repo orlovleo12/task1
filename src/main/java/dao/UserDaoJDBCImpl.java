@@ -1,15 +1,18 @@
-package main.java;
+package main.java.dao;
 
 //здесь я сделаю коннект к базе+управление данными в БД, после запроса из UserServlet
+
+import main.java.JdbcUtil;
+import main.java.model.User;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDao {
+public class UserDaoJDBCImpl implements UserDao {
     private Connection connection;
 
-    public UserDao() {
+    public UserDaoJDBCImpl() {
         connection = JdbcUtil.getConnection();
     }
 
@@ -84,7 +87,6 @@ public class UserDao {
                     prepareStatement("select * from table_name where id=?");
             preparedStatement.setInt(1, userId);
             ResultSet rs = preparedStatement.executeQuery();
-
             if (rs.next()) {
                 user.setId(rs.getInt("id"));
                 user.setName(rs.getString("name"));
@@ -95,6 +97,28 @@ public class UserDao {
             e.printStackTrace();
         }
 
+        return user;
+    }
+
+    @Override
+    public User getUserByLogin(String login) {
+        User user = new User();
+        try {
+
+            PreparedStatement preparedStatement = connection.
+                    prepareStatement("select * from table_name where login=?");
+            preparedStatement.setString(1, login);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) {
+                user.setId(rs.getInt("id"));
+                user.setName(rs.getString("name"));
+                user.setPassword(rs.getString("password"));
+                user.setLogin(rs.getString("login"));
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return user;
     }
 

@@ -1,4 +1,7 @@
-package main.java;
+package main.java.servlet;
+
+import main.java.dao.UserDaoJDBCImpl;
+import main.java.model.User;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,7 +15,7 @@ import java.io.IOException;
 public class UserServlet extends HttpServlet {
     private static String LIST_USER = "/listUser.jsp";
     private static String EDIT = "/edit.jsp";
-    private UserDao dao = new UserDao();
+    private UserDaoJDBCImpl dao = new UserDaoJDBCImpl();
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
