@@ -2,7 +2,7 @@ package main.java.dao;
 
 //здесь я сделаю коннект к базе+управление данными в БД, после запроса из UserServlet
 
-import main.java.JdbcUtil;
+import main.java.factory.DBHelper;
 import main.java.model.User;
 
 import java.sql.*;
@@ -12,8 +12,8 @@ import java.util.List;
 public class UserDaoJDBCImpl implements UserDao {
     private Connection connection;
 
-    public UserDaoJDBCImpl() {
-        connection = JdbcUtil.getConnection();
+    public UserDaoJDBCImpl(Connection connection) {
+        this.connection = DBHelper.getConnection();
     }
 
     public void addUser(User user) {
