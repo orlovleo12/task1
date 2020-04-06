@@ -14,7 +14,7 @@
 <body>
 
 
-<form method="POST" action='UserServlet?action=edit' name="addUser">
+<form method="POST" action='edit?action=edit' name="addUser">
     ID : <input type="text" readonly="readonly" name="id"
                      value="<c:out value="${user.getId()}" />" /> <br />
     Name : <input

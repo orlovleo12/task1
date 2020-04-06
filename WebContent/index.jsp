@@ -10,6 +10,6 @@
 </head>
 <body>
 
-<p><a href="UserServlet?action=all">¬¯¬Ñ¬é¬ß¬Ö¬Þ...</a></p>
+<p><a href="list">¬¯¬Ñ¬é¬ß¬Ö¬Þ...</a></p>
 </body>
 </html>

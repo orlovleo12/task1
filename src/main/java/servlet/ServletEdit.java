@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/UserServlet")
-public class UserServlet extends HttpServlet {
+@WebServlet("/edit")
+public class ServletEdit extends HttpServlet {
     private static String LIST_USER = "/listUser.jsp";
     private static String EDIT = "/edit.jsp";
     private UserServiceImpl service = UserServiceImpl.getInstance();
@@ -24,25 +24,14 @@ public class UserServlet extends HttpServlet {
         String forward;
         request.setAttribute("users", service.getAllUsers());
         String action = request.getParameter("action");
-
-        if (action.equalsIgnoreCase("delete")) {
-            int userId = Integer.parseInt(request.getParameter("userId"));
-            service.deleteUser(userId);
-            forward = LIST_USER;
-            request.setAttribute("users", service.getAllUsers());
-        } else if (action.equalsIgnoreCase("edit")) {
+        if (action.equalsIgnoreCase("edit")) {
             int userId = Integer.parseInt(request.getParameter("userId"));
             User user = service.getUserById(userId);
             forward = EDIT;
             request.setAttribute("user", user);
-        } else if (action.equalsIgnoreCase("add")) {
-            forward = "/add.jsp";
-        } else {
-            forward = LIST_USER;
-        }
-
         RequestDispatcher view = request.getRequestDispatcher(forward);
         view.forward(request, response);
+    }
     }
 
     @Override
@@ -57,17 +46,6 @@ public class UserServlet extends HttpServlet {
             service.updateUser(user);
             String forward = LIST_USER;
 
-            request.setAttribute("users", service.getAllUsers());
-            RequestDispatcher view = request.getRequestDispatcher(forward);
-            view.forward(request, response);
-        } else if (action.equalsIgnoreCase("add")) {
-            User user = new User();
-            user.setName(request.getParameter("name"));
-            user.setLogin(request.getParameter("login"));
-            user.setPassword(request.getParameter("password"));
-            service.addUser(user);
-
-            String forward = LIST_USER;
             request.setAttribute("users", service.getAllUsers());
             RequestDispatcher view = request.getRequestDispatcher(forward);
             view.forward(request, response);
