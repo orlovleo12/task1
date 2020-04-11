@@ -14,6 +14,7 @@ public class UserServiceImpl implements UserServiсe {
 
     }
     public static UserServiceImpl getInstance() {
+
         return userServiceImpl;
     }
 
