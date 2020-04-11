@@ -2,10 +2,7 @@ package main.java.dao;
 
 
 import main.java.model.User;
-import org.hibernate.Criteria;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
@@ -46,11 +43,10 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public List<User> getAllUsers() {
-        List<User> empList = null;
+        List<User> empList;
         session = sessionFactory.getCurrentSession();
         session.beginTransaction();
-        Criteria criteria = session.createCriteria(User.class);
-        empList = criteria.list();
+        empList = (List<User>) session.createQuery("from User").list();
         session.getTransaction().commit();
         return empList;
     }
@@ -67,9 +63,8 @@ public class UserDaoHibernateImpl implements UserDao {
     public User getUserByLogin(String login) {
         session = sessionFactory.getCurrentSession();
         session.beginTransaction();
-        User result = (User) session.createCriteria(User.class, login)
-                .add(Restrictions.eq("login", login))
-                .uniqueResult();
+        Query query =session.createQuery("from User where login=:login");
+        User result = (User) query.setParameter("login", login).uniqueResult();
         session.getTransaction().commit();
         return result;
     }
