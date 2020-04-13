@@ -12,14 +12,16 @@ public class User {
     @Id
     @GenericGenerator(name="123" , strategy="increment")
     @GeneratedValue(generator="123")
-    @Column(name="id")
+
     private int id;
-    @Column(name="name")
+
     private String name;
-    @Column(name="login")
+
     private String login;
-    @Column(name="password")
+
     private String password;
+
+    private String role;
 
     public int getId() {
         return id;
@@ -51,5 +53,13 @@ public class User {
 
     public void setLogin(String login) {
         this.login = login;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

@@ -25,16 +25,16 @@
         <tr>
             <td><c:out value="${user.getId()}" /></td>
             <td><c:out value="${user.getName()}" /></td>
-            <td><c:out value="${user.getLogin()}" /></td>
             <td><c:out value="${user.getPassword()}" /></td>
-            <td><a href="edit?action=edit&userId=<c:out value="${user.getId()}"/>">Update</a></td>
-            <td><a href="delete?action=delete&userId=<c:out value="${user.getId()}"/>">Delete</a></td>
+            <td><c:out value="${user.getLogin()}" /></td>
+            <td><a href="/admin/edit?action=edit&id=<c:out value="${user.getId()}"/>">Update</a></td>
+            <td><a href="/admin/delete?action=delete&id=<c:out value="${user.getId()}"/>">Delete</a></td>
         </tr>
     </c:forEach>
     </tbody>
 
 </table>
 
-<p><a href="add?action=add">Add User</a></p>
+<p><a href="/admin/add">Add User</a></p>
 </body>
 </html>

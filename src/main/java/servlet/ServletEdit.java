@@ -1,11 +1,9 @@
 package main.java.servlet;
 
-import main.java.dao.UserDaoJDBCImpl;
-import main.java.factory.DBHelper;
+
 import main.java.model.User;
 import main.java.service.UserServiceImpl;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,42 +11,32 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/edit")
+@WebServlet("/admin/edit")
 public class ServletEdit extends HttpServlet {
-    private static String LIST_USER = "/listUser.jsp";
-    private static String EDIT = "/edit.jsp";
-    private UserServiceImpl service = UserServiceImpl.getInstance();
-
+    UserServiceImpl userDao = new UserServiceImpl();
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String forward;
-        request.setAttribute("users", service.getAllUsers());
-        String action = request.getParameter("action");
-        if (action.equalsIgnoreCase("edit")) {
-            int userId = Integer.parseInt(request.getParameter("userId"));
-            User user = service.getUserById(userId);
-            forward = EDIT;
-            request.setAttribute("user", user);
-        RequestDispatcher view = request.getRequestDispatcher(forward);
-        view.forward(request, response);
-    }
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("user", userDao.getUserById(Integer.parseInt(req.getParameter("id"))));
+        String forward = "/edit.jsp";
+        req.getRequestDispatcher(forward).forward(req, resp);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String action = request.getParameter("action");
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String action = req.getParameter("action");
         if (action.equalsIgnoreCase("edit")) {
             User user = new User();
-            user.setId(Integer.parseInt(request.getParameter("id")));
-            user.setName(request.getParameter("name"));
-            user.setLogin(request.getParameter("login"));
-            user.setPassword(request.getParameter("password"));
-            service.updateUser(user);
-            String forward = LIST_USER;
+            user.setId(Integer.parseInt(req.getParameter("id")));
+            user.setRole(req.getParameter("role"));
+            user.setName(req.getParameter("name"));
+            user.setLogin(req.getParameter("login"));
+            user.setPassword(req.getParameter("password"));
+            userDao.updateUser(user);
+            String forward = "/admin.jsp";
 
-            request.setAttribute("users", service.getAllUsers());
-            RequestDispatcher view = request.getRequestDispatcher(forward);
-            view.forward(request, response);
+            req.setAttribute("users", userDao.getAllUsers());
+            req.getRequestDispatcher(forward).forward(req, resp);
+
         }
     }
 }

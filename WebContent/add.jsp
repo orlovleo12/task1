@@ -14,17 +14,15 @@
 <body>
 
 
-<form method="POST" action='add?action=add' name="addUser">
-    ID : <input type="text" readonly="readonly" name="id"
-                value="<c:out value="${user.getId()}" />" /> <br />
+<form method="POST" action='/admin/add?action=add'>
     Name : <input
         type="text" name="name"
-        value="<c:out value="${user.getName()}" />" /> <br />
+        value="<c:out value="" />" /> <br />
     Login : <input
         type="text" name="login"
-        value="<c:out value="${user.getLogin()}" />" /> <br />
+        value="<c:out value="" />" /> <br />
     Password : <input type="text" name="password"
-                      value="<c:out value="${user.getPassword()}" />" /> <br /><input
+                      value="<c:out value="" />" /> <br /><input
         type="submit" value="Submit" />
 </form>
 </body>

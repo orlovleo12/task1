@@ -9,21 +9,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/admin/delete")
-public class ServletDelete extends HttpServlet {
+@WebServlet("/admin")
+public class ServletAdmin extends HttpServlet {
     UserServiceImpl userDao = new UserServiceImpl();
-
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setAttribute("users", userDao.getAllUsers());
+        req.getRequestDispatcher("/admin.jsp").forward(req, resp);
 
-        String action = req.getParameter("action");
-        if (action.equalsIgnoreCase("delete")) {
-            int userId = Integer.parseInt(req.getParameter("id"));
-            userDao.deleteUser(userId);
-            String forward = "/admin.jsp";
-            req.setAttribute("users", userDao.getAllUsers());
-            req.getRequestDispatcher(forward).forward(req, resp);
-        }
     }
 
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.getRequestDispatcher("admin.jsp").forward(req, resp);
+    }
 }
