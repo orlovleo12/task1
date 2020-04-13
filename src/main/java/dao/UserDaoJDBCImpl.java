@@ -19,7 +19,7 @@ public class UserDaoJDBCImpl implements UserDao {
     public void addUser(User user) {
         try {
             PreparedStatement preparedStatement = connection
-                    .prepareStatement("insert into table_name(name,login,password) values (?, ?, ?)");
+                    .prepareStatement("insert into user(name,login,password) values (?, ?, ?)");
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getLogin());
             preparedStatement.setString(3, user.getPassword());
@@ -64,7 +64,7 @@ public class UserDaoJDBCImpl implements UserDao {
         List<User> users = new ArrayList<User>();
         try {
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("select * from table_name");
+            ResultSet rs = statement.executeQuery("select * from user");
             while (rs.next()) {
                 User user = new User();
                 user.setId(rs.getInt("id"));
@@ -84,7 +84,7 @@ public class UserDaoJDBCImpl implements UserDao {
         User user = new User();
         try {
             PreparedStatement preparedStatement = connection.
-                    prepareStatement("select * from table_name where id=?");
+                    prepareStatement("select * from user where id=?");
             preparedStatement.setInt(1, userId);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {
@@ -106,7 +106,7 @@ public class UserDaoJDBCImpl implements UserDao {
         try {
 
             PreparedStatement preparedStatement = connection.
-                    prepareStatement("select * from table_name where login=?");
+                    prepareStatement("select * from user where login=?");
             preparedStatement.setString(1, login);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) {

@@ -6,7 +6,7 @@ import org.hibernate.annotations.Proxy;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "table_name")
+@Table(name = "user")
 @Proxy(lazy=false)
 public class User {
     @Id

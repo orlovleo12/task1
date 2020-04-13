@@ -35,16 +35,12 @@ public class ServletSignIn extends HttpServlet {
             if (role.equals("user")) {
                 String forward = "/user";
                 req.getSession().setAttribute("user", user);
-                ServletContext context = getServletContext();
-                RequestDispatcher rd = context.getRequestDispatcher(forward);
-                rd.forward(req, resp);
+                req.getRequestDispatcher(forward).forward(req, resp);
             } else if (role.equals("admin")) {
                 String forward = "/admin";
                 req.setAttribute("users", userDao.getAllUsers());
                 req.getSession().setAttribute("user", user);
-                ServletContext context = getServletContext();
-                RequestDispatcher rd = context.getRequestDispatcher(forward);
-                rd.forward(req, resp);
+                req.getRequestDispatcher(forward).forward(req, resp);
 
             }
         }
